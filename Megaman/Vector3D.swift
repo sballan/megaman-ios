@@ -16,7 +16,7 @@ struct Vector3D : Printable, Equatable
     
     var module : CGFloat
     {
-        return CGFloat(sqrtf( x*x + y*y + z*z ))
+        return CGFloat(sqrtf( Float( x*x + y*y + z*z )))
     }
     
     init(_ x: CGFloat, _ y: CGFloat, _ z: CGFloat)
@@ -61,7 +61,7 @@ struct Vector3D : Printable, Equatable
     
     func angleBetween(other: Vector3D) -> CGFloat
     {
-        return radiansToDegrees( acosf( normalized().dot( other.normalized() ) ) )
+        return CGFloat(radiansToDegrees( acosf( Float(normalized().dot( other.normalized() ) ) )))
     }
     
     mutating func normalize() -> Vector3D

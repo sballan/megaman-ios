@@ -40,18 +40,18 @@ class JoystickView: UIView {
     
     var delegate : JoystickViewDelegate?
     
-    init(coder aDecoder: NSCoder!) {
-        return super.init(coder: aDecoder)
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 
     func initializeAnalogStick() {
         analogStickAreaView.layer.borderColor = UIColor(white: 0.5, alpha: 0.8).CGColor
         analogStickAreaView.layer.borderWidth = 2.0
-        analogStickAreaView.layer.cornerRadius = floorf(analogStickAreaView.frame.size.height / 2.0)
+        analogStickAreaView.layer.cornerRadius = CGFloat(floorf(Float(analogStickAreaView.frame.size.height / 2.0)))
 
         analogStickView.layer.borderColor = UIColor(white: 0.3, alpha: 0.8).CGColor
         analogStickView.layer.borderWidth = 1.0
-        analogStickView.layer.cornerRadius = floorf(analogStickView.frame.size.height / 2.0)
+        analogStickView.layer.cornerRadius = CGFloat(floorf(Float(analogStickView.frame.size.height / 2.0)))
 
         analogStickView.layer.shadowColor = UIColor.blackColor().CGColor
         analogStickView.layer.shadowRadius = 10.0
@@ -68,7 +68,7 @@ class JoystickView: UIView {
     }
 
     func moveAnalogStick(position: CGPoint) {
-        let radius = floorf(analogStickAreaView.frame.size.height / 2.0)
+        let radius = CGFloat(floorf(Float(analogStickAreaView.frame.size.height / 2.0)))
         var analogStickRelativePositionVector = Vector3D(position.x - analogStickAreaView.center.x, position.y - analogStickAreaView.center.y, 0.0)
 
         if analogStickRelativePositionVector.module <= radius {

@@ -15,8 +15,9 @@ extension SKNode
     {
         let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks")
         
-        let sceneData = NSData.dataWithContentsOfFile(path, options: .DataReadingMappedIfSafe, error: nil)
-        let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+        //let sceneData = NSData.dataWithContentsOfFile(path!, options: .DataReadingMappedIfSafe, error: nil)
+		let sceneData = NSData(contentsOfFile:path!, options: .DataReadingMappedIfSafe, error: nil)
+        let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
         
         archiver.setClass(classForKeyedUnarchiver(), forClassName: "SKScene")
         let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
@@ -28,12 +29,12 @@ extension SKNode
 class GameViewController: UIViewController
 {
     
-    @IBOutlet var joystickView : JoystickView
+    @IBOutlet var joystickView : JoystickView!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+		
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene
         {
             let skView = view as SKView
@@ -59,6 +60,6 @@ class GameViewController: UIViewController
 
     override func supportedInterfaceOrientations() -> Int
     {
-        return Int(UIInterfaceOrientationMask.Landscape.toRaw())
+        return Int(UIInterfaceOrientationMask.Landscape.rawValue)
     }
 }

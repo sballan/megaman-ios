@@ -131,8 +131,9 @@ class MegamanNode : SKSpriteNode
     {
          faceLocation(destination)
         
-        let duration = NSTimeInterval(( fabsf( destination.x - position.x ) / scene?.size.width ) * TIME_TO_CROSS_SCREEN)
-        
+		let duration = NSTimeInterval(( fabsf(Float(( destination.x - position.x ) / scene!.size.width ) * Float(TIME_TO_CROSS_SCREEN))))
+		
+		
         run()
         runAction(SKAction.moveTo( CGPoint( x: destination.x, y: position.y ), duration: duration ),
                                    withKey: MOVEMENT_ANIM_KEY,
@@ -246,7 +247,7 @@ class MegamanNode : SKSpriteNode
             multiplierForDirection = 1.0
         }
         
-        xScale = CGFloat(CGFloat(fabsf(xScale)) * multiplierForDirection)
+        xScale = CGFloat(CGFloat(fabsf(Float(xScale))) * multiplierForDirection)
         
         return wasFacingLeft != ( xScale < 0.0 )
     }
