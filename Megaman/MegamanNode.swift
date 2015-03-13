@@ -40,22 +40,22 @@ class MegamanNode : SKSpriteNode
     
     let atlas : SKTextureAtlas
     
-    let stillFrames : SKTexture[]
+	let stillFrames : [SKTexture]
     let stillAnimation : SKAction
     
-    let stillAndShootingFrames : SKTexture[]
+    let stillAndShootingFrames : [SKTexture]
     let stillAndShootingAnimation : SKAction
 
-    let startRunningFrames : SKTexture[]
+    let startRunningFrames : [SKTexture]
     let startRunningAnimation : SKAction
     
-    let runningFrames : SKTexture[]
+    let runningFrames : [SKTexture]
     let runningAnimation : SKAction
     
-    let runningAndShootingFrames : SKTexture[]
+    let runningAndShootingFrames : [SKTexture]
     let runningAndShootingAnimation : SKAction
     
-    let jumpingFrames : SKTexture[]
+	let jumpingFrames : [SKTexture]
     let jumpingAnimation : SKAction
 
     var state : State = .Still
@@ -64,10 +64,10 @@ class MegamanNode : SKSpriteNode
     
     let WALK_STEP : Float = 50.0
     
-    let JUMP_HEIGHT : Float = 100.0
+    let JUMP_HEIGHT : CGFloat = 100.0
     let JUMP_DURATION : NSTimeInterval = 0.2
     
-    init()
+    override init()
     {
         atlas = SKTextureAtlas(named: "megaman")
 
@@ -123,11 +123,15 @@ class MegamanNode : SKSpriteNode
         setScale(4.0)
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func moveTo( destination: CGPoint )
     {
          faceLocation(destination)
         
-        let duration = NSTimeInterval(( fabsf( destination.x - position.x ) / scene.size.width ) * TIME_TO_CROSS_SCREEN)
+        let duration = NSTimeInterval(( fabsf( destination.x - position.x ) / scene?.size.width ) * TIME_TO_CROSS_SCREEN)
         
         run()
         runAction(SKAction.moveTo( CGPoint( x: destination.x, y: position.y ), duration: duration ),
@@ -137,8 +141,8 @@ class MegamanNode : SKSpriteNode
     
     func moveOneStepTo( direction: MegamanDirection )
     {
-        let step = Float(direction.toRaw()) * WALK_STEP
-        let nextLocation = CGPoint(x: self.position.x + step, y: self.position.y)
+        let step = Float(direction.rawValue) * WALK_STEP
+        let nextLocation = CGPoint(x: self.position.x + CGFloat(step), y: self.position.y)
         faceLocation( nextLocation )
 
         self.run()
@@ -212,15 +216,15 @@ class MegamanNode : SKSpriteNode
         
         shot.xScale = xScale
         shot.yScale = yScale
-        parent.addChild(shot)
+        parent!.addChild(shot)
         
         shot.position.y = ( position.y + size.height / 2.0 ) - ( MEGA_BUSTER_CANNON_OFFSET_Y * yScale ) - (( MEGA_BUSTER_CANNON_HEIGHT * yScale  ) / 2.0)
         
-        let megamanDxPerSec = scene.size.width / TIME_TO_CROSS_SCREEN
+        let megamanDxPerSec = scene!.size.width / TIME_TO_CROSS_SCREEN
         let shotOffset = ( size.width / 2.0 ) + ( shot.size.width / 2.0 ) + MEGA_BUSTER_INITIAL_DIST_FROM_SHOT
         let facingDir : Shot.Direction = xScale < 0.0 ? .Left : .Right
         
-        shot.position.x = position.x + ( CGFloat(facingDir.toRaw()) * shotOffset )
+        shot.position.x = position.x + ( CGFloat(facingDir.rawValue) * shotOffset )
         shot.animate( facingDir, ownerDxPerSec: megamanDxPerSec )
         
         ++liveShots
@@ -299,48 +303,6 @@ class MegamanNode : SKSpriteNode
         runAction(finalAction, withKey: STATE_ANIM_KEY, optionalCompletion: completion )
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

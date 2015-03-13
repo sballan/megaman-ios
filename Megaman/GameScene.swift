@@ -86,7 +86,7 @@ class GameScene : SKScene, JoystickViewDelegate
     
     override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!)
     {
-        for touch in ( touches.allObjects as UITouch[] )
+        for touch in ( touches.allObjects as [UITouch] )
         {
             if touch.tapCount > 0
             {
@@ -172,46 +172,4 @@ class GameScene : SKScene, JoystickViewDelegate
     {
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

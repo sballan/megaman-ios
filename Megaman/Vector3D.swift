@@ -16,7 +16,7 @@ struct Vector3D : Printable, Equatable
     
     var module : CGFloat
     {
-        return sqrtf( x*x + y*y + z*z )
+        return CGFloat(sqrtf( x*x + y*y + z*z ))
     }
     
     init(_ x: CGFloat, _ y: CGFloat, _ z: CGFloat)
@@ -67,7 +67,7 @@ struct Vector3D : Printable, Equatable
     mutating func normalize() -> Vector3D
     {
         let m = module
-        if fdif( m, 0.0 )
+        if fdif( CFloat(m), 0.0 )
         {
             x /= m
             y /= m
@@ -139,119 +139,79 @@ struct Vector3D : Printable, Equatable
     }
 }
 
-@infix func + (left: Vector3D, right: Vector3D) -> Vector3D
+infix operator + {associativity left precedence 140}
+
+func + (left: Vector3D, right: Vector3D) -> Vector3D
 {
     return Vector3D( left.x + right.x, left.y + right.y, left.z + right.z )
 }
 
-@infix func - (left: Vector3D, right: Vector3D) -> Vector3D
+infix operator - {associativity left precedence 140}
+
+func - (left: Vector3D, right: Vector3D) -> Vector3D
 {
     return Vector3D( left.x - right.x, left.y - right.y, left.z - right.z )
 }
 
-@prefix func - (vector: Vector3D) -> Vector3D
+prefix operator - {}
+
+prefix func - (vector: Vector3D) -> Vector3D
 {
     return Vector3D( -vector.x, -vector.y, -vector.z )
 }
 
-@assignment func += (inout left: Vector3D, right: Vector3D)
+postfix operator += {}
+
+func += (inout left: Vector3D, right: Vector3D)
 {
     left = left + right
 }
 
-@assignment func -= (inout left: Vector3D, right: Vector3D)
+infix operator -= {}
+
+func -= (inout left: Vector3D, right: Vector3D)
 {
     left = left - right
 }
 
-@prefix @assignment func ++ (inout vector: Vector3D) -> Vector3D
+postfix operator ++ {}
+
+postfix func ++ (inout vector: Vector3D) -> Vector3D
 {
     vector += Vector3D(1.0, 1.0, 1.0)
     return vector
 }
 
-@infix func == (left: Vector3D, right: Vector3D) -> Bool
+infix operator == {precedence 130}
+
+func == (left: Vector3D, right: Vector3D) -> Bool
 {
     return ( left.x == right.x ) && ( left.y == right.y ) && ( left.z == right.z )
 }
 
-@infix func * (left: Vector3D, right: CGFloat) -> Vector3D
+infix operator * {associativity left precedence 150}
+
+func * (left: Vector3D, right: CGFloat) -> Vector3D
 {
     return Vector3D( left.x * right, left.y * right, left.z  * right )
 }
 
-@infix func * (left: CGFloat, right: Vector3D) -> Vector3D
+func * (left: CGFloat, right: Vector3D) -> Vector3D
 {
     return right * left
 }
 
-@infix func * (left: Vector3D, right: Vector3D) -> CGFloat
+func * (left: Vector3D, right: Vector3D) -> CGFloat
 {
     return left.dot( right )
 }
 
-operator infix ** {}
+infix operator ** {associativity left precedence 160}
 
-@infix func ** (left: Vector3D, right: Vector3D) -> Vector3D
+func ** (left: Vector3D, right: Vector3D) -> Vector3D
 {
     return left.cross( right )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

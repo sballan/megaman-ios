@@ -26,13 +26,13 @@ protocol JoystickViewDelegate {
 
 class JoystickView: UIView {
 
-    @IBOutlet var upDirectionButton : UIButton
-    @IBOutlet var rightDirectionButton : UIButton
-    @IBOutlet var leftDirectionButton : UIButton
-    @IBOutlet var downDirectionButton : UIButton
+    @IBOutlet var upDirectionButton : UIButton!
+    @IBOutlet var rightDirectionButton : UIButton!
+    @IBOutlet var leftDirectionButton : UIButton!
+    @IBOutlet var downDirectionButton : UIButton!
 
-    @IBOutlet var analogStickAreaView : UIView
-    @IBOutlet var analogStickView : UIView
+    @IBOutlet var analogStickAreaView : UIView!
+    @IBOutlet var analogStickView : UIView!
 
     var analogStickInitialized = false
 
